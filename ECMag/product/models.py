@@ -6,12 +6,12 @@ from django.db import models
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=255)
     slug = models.SlugField()
 
     class Meta:
         ordering = ('name',)
-        verbose_name_plural = 'categories'
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
@@ -22,7 +22,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -32,7 +32,6 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('-date_added',)
-        verbose_name_plural = 'products'
 
     def __str__(self):
         return self.name
@@ -57,12 +56,14 @@ class Product(models.Model):
             else:
                 return ''
 
-    def make_thumbnail(self, image, size=(300, 300)):
+    def make_thumbnail(self, image, size=(300, 200)):
         img = Image.open(image)
         img.convert('RGB')
         img.thumbnail(size)
+
         thumb_io = BytesIO()
         img.save(thumb_io, 'JPEG', quality=85)
+
         thumbnail = File(thumb_io, name=image.name)
 
         return thumbnail
