@@ -6,7 +6,7 @@
           Welcome to ECMag
         </p>
         <p class="subtitle">
-          The jackets and other clothnes store online
+          The jackets and other clothes store online
         </p>
       </div>
     </section>
